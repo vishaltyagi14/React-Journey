@@ -13,12 +13,8 @@ let decrease =()=>{
   }
 }
 
-let ClickFn=()=>{
-  confirm("You are an asshole bitch")
-}
   return (
     <>
-    <button id='click' onClick={ClickFn}>Click me</button>
     <div className="main">
       <button></button>
       <div className="display">
