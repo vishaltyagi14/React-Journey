@@ -15,6 +15,7 @@ let decrease =()=>{
 
   return (
     <>
+    <p onMouseOver={mouseOverHandle}>Hello, try to hover on me</p>
     <div className="main">
       <button></button>
       <div className="display">
