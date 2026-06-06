@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import './App.css'
-import themBtn from './components/themBtn'
+import ThemeBtn from './components/ThemeBtn'
+import { ContextProvider } from './context/Context'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-    <themBtn></themBtn>
-    </>
+    <ContextProvider>
+    <ThemeBtn></ThemeBtn>
+    </ContextProvider>
   )
 }
 
