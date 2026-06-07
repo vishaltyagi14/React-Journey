@@ -3,7 +3,13 @@ import "./counter.css"
 export const Counter =()=>{
 
     const reducer=(state,action)=>{
-        console.log(action)
+        if(action.type ==="Increment"){
+            return state+1;
+        }
+        if(action.type ==="Decrement"){
+            if(state>0)return state-1;
+            return state
+        }
     }
  const [counter, dispatch]=useReducer(reducer,0);
 
