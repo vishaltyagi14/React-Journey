@@ -7,7 +7,7 @@ function TodoItem({ todo }) {
     const { updateTODO, deleteTODO, completedTODO } = useContext(OnlyContext)
 
     const editTodo = () => {
-        updateTODO(todo.id, { ...todo, title: todoMsg })
+        updateTODO(todo.id, todoMsg)
         setIsTodoEditable(false)
     }
 

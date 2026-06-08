@@ -9,7 +9,7 @@ function TodoForm() {
     const add =(e)=>{
         e.preventDefault();
         if(!title) return
-        addTODO({title,completed:false})
+        addTODO(title)
         setTitle("")
     }
 

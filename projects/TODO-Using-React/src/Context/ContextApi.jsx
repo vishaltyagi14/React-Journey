@@ -4,7 +4,6 @@ export const OnlyContext = createContext();
 
 export const ContextProvider = ({ children }) => {
   const [todos, setTodos] = useState([
-    { id: 1, title: "Learn DSA", completed: false }
   ]);
 
   const addTODO = (title) => {
