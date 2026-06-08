@@ -30,7 +30,7 @@ export const ContextProvider = ({ children }) => {
   };
 
   useEffect(()=>{
-    const allTodos=JSON.parse(localStorage.getItem("allTodos"))
+    const allTodos=JSON.parse(localStorage.getItem("todos"))
     if(allTodos && allTodos.length>0){
         setTodos(allTodos)
     }
