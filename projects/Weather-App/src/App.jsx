@@ -4,11 +4,11 @@
   import useAxios from "./hooks/useAxios";
   import useDeboounce from "./hooks/useDeboounce";
   function App() {
+    const apiUrl = import.meta.env.VITE_API;
     const [location, setLocation] = useState('')
     const searchFor = useDeboounce(location, 500)
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${searchFor}&units=metric&APPID=7da0d5cf6819c046d534c9407462d590`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${searchFor}&units=metric&APPID=${apiUrl}`;
     const {data, error, loading} = useAxios(url)
-
 
     return (
       <>
