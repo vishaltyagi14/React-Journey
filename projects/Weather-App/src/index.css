@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+*{
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+p{
+    font-size: 1.6rem;
+}
+h1{
+    font-size: 6rem;
+}
+.app{
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.app:before{
+    content: '';
+    background: url('./assets/sunset.jpg') no-repeat center center/cover;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
