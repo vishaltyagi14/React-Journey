@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { OnlyContext,ContextProvider } from '../context/Context'
 
 
-const themBtn = () => {
+const ThemeBtn = () => {
     const {theme,setThemeFn}=useContext(OnlyContext)
   return (
     <>
