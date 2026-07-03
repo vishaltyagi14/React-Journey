@@ -3,7 +3,7 @@ import "./App.css";
 
 function App() {
   const [product, setProduct] = useState([]);
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
   const fetchProd = async () => {
     const res = await fetch("https://dummyjson.com/products?limit=100");
     const data = await res.json();
@@ -18,9 +18,14 @@ function App() {
     fetchProd();
   }, []);
 
-  const selectedPageHandle=(selectedPage)=>{
-    setPage(selectedPage)
-  }
+  const selectedPageHandle = (selectedPage) => {
+    if (
+      selectedPage >= 1 &&
+      selectedPage <= product.length / 10 &&
+      selectedPage != page
+    )
+      setPage(selectedPage);
+  };
   return (
     <>
       <div>
@@ -37,15 +42,27 @@ function App() {
           </div>
         )}
 
-        {product.length > 0 && <div className="pagination">
-          <span>◀️</span>
-         {[ ...Array(product.length/10)].map((_,i)=>{
-            return <span 
-            className={page===i+1?" ":""}
-            onClick={()=>selectedPageHandle(i+1)} id={i}>{i+1}</span>
-          })}
-          <span>▶️</span>
-          </div>}
+        {product.length > 0 && (
+          <div className="pagination">
+            <span onClick={() => selectedPageHandle(page - 1)}
+              className={page>1? "pagination_enabled":"pagination_disabled"}
+              >←</span>
+            {[...Array(product.length / 10)].map((_, i) => {
+              return (
+                <span
+                  className={page === i + 1 ? " pagination_selected" : ""}
+                  onClick={() => selectedPageHandle(i + 1)}
+                  id={i}
+                >
+                  {i + 1}
+                </span>
+              );
+            })}
+            <span onClick={() => selectedPageHandle(page + 1)}
+              className={page<product.length/10? "pagination_enabled":"pagination_disabled"}
+              >→</span>
+          </div>
+        )}
       </div>
     </>
   );

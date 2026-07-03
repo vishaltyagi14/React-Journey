@@ -1,11 +1,14 @@
-.products{
+* {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.products {
   margin: 20px;
   padding: 0;
   display: grid;
   gap: 20px;
   grid-template-columns: 1fr 1fr 1fr;
 }
-.products_single{
+.products_single {
   height: 250px;
   padding: 20px;
   background-color: rgb(220, 220, 220);
@@ -14,26 +17,36 @@
   cursor: pointer;
 }
 
-.products_single > img{
+.products_single > img {
   height: 95%;
   width: 100%;
   object-fit: cover;
   margin-bottom: 3px;
 }
 
-.pagination{
+.pagination {
   justify-content: center;
   margin: 15px 0;
   display: flex;
   padding: 10px;
 }
 
-.pagination> span{
+.pagination > span {
   padding: 15px 20px;
   border: 1 px solid gray;
   cursor: pointer;
 }
-.pagination_selected{
-  background-color: rgb(220, 220, 220);
+.pagination_selected {
+  background-color: rgb(48, 156, 244);
   border-radius: 7px;
+  color: white;
+}
+.pagination_disabled {
+  opacity: 0;
+}
+.pagination_enabled {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
