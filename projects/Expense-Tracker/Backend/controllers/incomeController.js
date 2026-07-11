@@ -5,10 +5,15 @@ import getDateRange from "../utils/dateFilter.js"
 
 // Add Income
 export const addIncome = async (req, res) => {
-    const userId = req.user._id
-    const { description, amount, category, date } = req.body
-
     try {
+        const userId = req.user?._id   // ✅ ab try ke andar, aur optional chaining
+        if (!userId) {
+            return res.status(401).json({
+                success: false,
+                message: "Unauthorized"
+            })
+        }
+        const { description, amount, category, date } = req.body
         if (!description || !amount || !category || !date) {
             return res.status(400).json({
                 success: false,
@@ -36,7 +41,6 @@ export const addIncome = async (req, res) => {
         })
     }
 }
-
 // GET Income
 
 export const getIncome = async (req, res) => {

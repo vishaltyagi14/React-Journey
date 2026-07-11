@@ -4,70 +4,70 @@ import img1 from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { ChevronDown, LogOut, User } from "lucide-react";
 import axios from "axios";
-const BASE_URL = "http://localhost:3000/";
+const BASE_URL = "http://localhost:3000";
 
 const Navbar = ({ user: propUser, onLogout }) => {
   const menuRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
-const navigate = useNavigate();
-const [user, setUser] = useState(
-  propUser || {
-    name: "",
-    email: "",
-  }
-);
+  const navigate = useNavigate();
+  const [user, setUser] = useState(
+    propUser || {
+      name: "",
+      email: "",
+    }
+  );
 
-// Fetch Data
+  // Fetch Data
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) return;
 
-useEffect(() => {
-  const fetchUserData = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) return;
-      
-        const response = await axios.get(`${BASE_URL}/user/me`,{
-          headers: {Authorization: `Bearer ${token}`}
-        })
-        const userData= response.data.user||response.data
-        setUser(userData)
+        const response = await axios.get(`${BASE_URL}/user/me`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const userData = response.data.user || response.data;
+        setUser(userData);
       } catch (error) {
-        console.error("Filed to load Profile",error)
+        console.error("Failed to load Profile", error);
       }
     };
-    if(!propUser){
-      fetchUserData
+    if (!propUser) {
+      fetchUserData();
     }
-  },[propUser]);
+  }, [propUser]);
 
-
-   useEffect(() => {
+  useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
         setMenuOpen(false);
       }
     };
-    
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-  
-  const handleLogout=()=>{
+
+  const handleLogout = () => {
     setMenuOpen(false);
-    localStorage.removeItem('token')
-    onLogout?.()
-    navigate('login')
-  }
+    localStorage.removeItem("token");
+    onLogout?.();
+    navigate("/login");
+  };
+
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
   };
 
   return (
     <header className={navbarStyles.header}>
-      <div className={navbarStyles.container}>
-        {/* Logo */}
+      {/* min-w-0 lets this flex row shrink children correctly instead of pushing the logo */}
+      <div className={`${navbarStyles.container} min-w-0`}>
+        {/* Logo — flex-shrink-0 keeps it from being squeezed when the dropdown opens */}
         <div
           onClick={() => navigate("/")}
-          className={navbarStyles.logoContainer}
+          className={`${navbarStyles.logoContainer} flex-shrink-0`}
         >
           <div className={navbarStyles.logoImage}>
             <img src={img1} alt="logo" />
@@ -75,7 +75,11 @@ useEffect(() => {
           <span className={navbarStyles.logoText}>Expense Tracker</span>
         </div>
         {user && (
-          <div className={navbarStyles.userContainer} ref={menuRef}>
+          // relative anchors the dropdown so it doesn't add to normal flex flow
+          <div
+            className={`${navbarStyles.userContainer} relative flex-shrink-0`}
+            ref={menuRef}
+          >
             <button onClick={toggleMenu} className={navbarStyles.userButton}>
               <div className="relative">
                 <div className={navbarStyles.userAvatar}>
@@ -93,9 +97,12 @@ useEffect(() => {
             </button>
 
             {menuOpen && (
-              <div className={navbarStyles.dropdownMenu}>
+              // absolute + right-0 + top-full takes the dropdown out of flex flow entirely
+              <div
+                className={`${navbarStyles.dropdownMenu} absolute right-0 top-full mt-2 z-50`}
+              >
                 <div className={navbarStyles.dropdownHeader}>
-                  <div className="fex items-center gap-3">
+                  <div className="flex items-center gap-3">
                     <div className={navbarStyles.dropdownAvatar}>
                       {user?.name?.[0]?.toUpperCase() || "U"}
                     </div>

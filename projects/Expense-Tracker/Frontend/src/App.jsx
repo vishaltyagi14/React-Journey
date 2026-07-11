@@ -7,6 +7,8 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import axios from "axios";
 import Income from "./pages/Income";
+import Expense from "./pages/Expense";
+import Profile from "./pages/Profile";
 
 const API_URL = "http://localhost:3000";
 
@@ -235,6 +237,28 @@ const App = () => {
                 editTransaction={editTransaction}
                 deleteTransaction={deleteTransaction}
                 refreshTransactions={refreshTransactions}
+              />
+            }
+          />
+          <Route
+            path="/expense"
+            element={
+              <Expense
+                transactions={transactions}
+                addTransaction={addTransaction}
+                editTransaction={editTransaction}
+                deleteTransaction={deleteTransaction}
+                refreshTransactions={refreshTransactions}
+              />
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <Profile
+                user={user}
+                onUpdateProfile={updateUserData}
+                onLogout={handleLogout}
               />
             }
           />

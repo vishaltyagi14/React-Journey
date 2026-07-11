@@ -157,9 +157,9 @@ export const updUser =async(req,res)=>{
 }
 
 // Change Password 
-export const updPassword=async(req,res)=>{
-    const{oldPassword,newPassword} = req.body
-    if(!oldPassword||!newPassword||newPassword.length<8){
+export const updPassword = async(req,res)=>{
+    const { currentPassword, newPassword } = req.body   // ✅ match frontend
+    if(!currentPassword || !newPassword || newPassword.length<8){
         return res.status(401).json({
             success: false,
             message: "Password invalid or too Short"
@@ -169,29 +169,18 @@ export const updPassword=async(req,res)=>{
     try {
         const user = await User.findById(req.user.id).select("password")
         if(!user){
-            return res.status(400).json({
-            success: false,
-            message: "User Not Found"
-            })
+            return res.status(400).json({ success: false, message: "User Not Found" })
         }
-        const match =await bcrypt.compare(oldPassword,user.password)
+        const match = await bcrypt.compare(currentPassword, user.password)  // ✅
         if(!match){
-            return res.status(400).json({
-            success: false,
-            message: "Incorrect Password"
-        })
+            return res.status(400).json({ success: false, message: "Incorrect Password" })
         }
 
-        user.password = await bcrypt.hash(newPassword,10)
+        user.password = await bcrypt.hash(newPassword, 10)
         await user.save()
-        res.json({
-            success: true,
-            message: "Password Changed"
-        })
+        res.json({ success: true, message: "Password Changed" })
     } catch(err){
         console.error(err)
-        res.status(500).json
-        ({success:  false,
-        message: "Server error"})
+        res.status(500).json({ success: false, message: "Server error" })
     }
 }
