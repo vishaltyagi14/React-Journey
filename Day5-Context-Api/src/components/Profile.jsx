@@ -8,6 +8,7 @@ const Profile = () => {
   else return (
     <>
     <h1>Welcome {user.username}</h1>
+      <h1>By Vishal</h1>
     </>
   )
 }
